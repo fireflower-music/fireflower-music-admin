@@ -1,5 +1,5 @@
 <template>
-  <div>这是主页</div>
+  <div>This is main index</div>
 </template>
 
 <script>
