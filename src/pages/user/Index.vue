@@ -1,12 +1,25 @@
 <template>
   <div class="page">
     <div class="q-pa-md">
-      <q-table title="Treats" :rows="rows" :columns="columns" row-key="name" />
+      <q-btn color="primary" label="添加用户" />
+    </div>
+
+    <q-table :rows="rows" :columns="columns" row-key="name" hide-pagination />
+    <div class="row justify-center q-mt-md">
+      <q-pagination
+        v-model="pagination.page"
+        color="grey-8"
+        :max="pagesNumber"
+        size="sm"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import { computed, ref } from 'vue';
+
+// TODO: 1:16:12
 export default {
   name: 'Index',
   setup() {
@@ -151,9 +164,20 @@ export default {
       }
     ];
 
+    const pagination = ref({
+      sortBy: 'desc',
+      descending: false,
+      page: 2,
+      rowsPerPage: 3
+    });
+
     return {
       columns,
-      rows
+      rows,
+      pagination,
+      pagesNumber: computed(() =>
+        Math.ceil(rows.length / pagination.value.rowsPerPage)
+      )
     };
   }
 };
