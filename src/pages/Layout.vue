@@ -4,7 +4,7 @@
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
-        <q-toolbar-title> 花火音乐</q-toolbar-title>
+        <q-toolbar-title> 花火音乐 </q-toolbar-title>
 
         <q-space />
         <q-avatar color="teal" text-color="white"
@@ -22,6 +22,7 @@
           v-for="menu in menuRoutes"
           :key="menu.meta.title"
           :active="menu.name === route.name"
+          :to="menu.path"
         >
           <q-item-section avatar>
             <q-icon :name="menu.meta.icon" />
@@ -52,7 +53,7 @@ export default {
 
     const route = useRoute();
 
-    console.log(route.name);
+    // console.log(route.name);
 
     return {
       nicknameFirstWord: computed(

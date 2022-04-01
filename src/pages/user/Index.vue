@@ -4,7 +4,7 @@
       <q-btn color="primary" label="添加用户" />
     </div>
 
-    <q-table :rows="rows" :columns="columns" row-key="name" hide-pagination />
+    <q-table :rows="data" :columns="columns" row-key="name" hide-pagination />
     <div class="row justify-center q-mt-md">
       <q-pagination
         v-model="pagination.page"
@@ -18,6 +18,7 @@
 
 <script>
 import { computed, ref } from 'vue';
+import { search } from '../../api/user.js';
 
 export default {
   name: 'Index',
@@ -38,13 +39,23 @@ export default {
       }
     ];
 
-    const rows = [
-      {
-        id: 'U202203310001',
-        username: 'helloworld',
-        nickname: 'halo'
-      }
-    ];
+    const rows = [];
+
+    const data = ref([]);
+
+    const fetchData = () => {
+      search({ page: 0 }).then(res => {
+        // console.log(res.data);
+        data.value = data.value.concat(res.data.content);
+        pagination.value.page = res.data.number;
+        pagination.value.rowsPerPage = res.data.size;
+        pagination.value.rowsNumber = res.data.totalElements;
+        // TODO: Rebuild
+        // console.log(pagination.value);
+      });
+    };
+
+    fetchData();
 
     const pagination = ref({
       sortBy: 'desc',
@@ -59,7 +70,8 @@ export default {
       pagination,
       pagesNumber: computed(() =>
         Math.ceil(rows.length / pagination.value.rowsPerPage)
-      )
+      ),
+      data
     };
   }
 };

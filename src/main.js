@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import { Quasar } from 'quasar';
+import { Quasar, Notify } from 'quasar';
 
 // Import icon libraries
 import '@quasar/extras/material-icons/material-icons.css';
@@ -23,7 +23,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 myApp.use(Quasar, {
-  plugins: {} // import Quasar plugins and add here
+  plugins: {
+    Notify
+  } // import Quasar plugins and add here
 });
 
 myApp.mount('#app');
